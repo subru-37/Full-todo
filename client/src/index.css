@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+*{
+  font-family: 'Roboto', sans-serif;
+}
+body{
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: rgb(200, 191, 255);
+}
+.edit {
+  border: 1.5px solid rgb(141,181,145);
+  color: rgb(141,181,145);
+  background-color: transparent;
+  text-transform: capitalize;
+}
+.edit:hover{
+  background-color: rgb(182,223,186);
+}

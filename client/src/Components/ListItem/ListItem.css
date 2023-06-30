@@ -1,0 +1,8 @@
+.list-item{
+    width: 100%;
+    margin: 10px 0;
+    border-radius: 10px;
+    box-shadow: rgba(0,0,0,0.2) 0 0 0 1px;
+    display: flex;
+    justify-content: space-between;
+}

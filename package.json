@@ -1,0 +1,16 @@
+{
+  "name": "to-do-frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "if-env TYPE=server && (cd server && npm install) || (cd client && npm install)",
+    "server": "node ./server/server.js",
+    "client": "cd client && npm run dev"
+  },
+  "author": "Subramani E",
+  "license": "ISC",
+  "dependencies": {
+    "if-env": "^1.0.4"
+  }
+}
