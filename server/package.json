@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.js",
-    "deploy": "nodemon server.js",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "deploy": "node server.js"
   },
   "author": "Subramani E",
   "license": "ISC",

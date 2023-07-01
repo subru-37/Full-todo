@@ -11,11 +11,11 @@ const { Client } = require('pg');
 // })
 // console.log(process.env.API_KEY)
 const supabase = new Client({
-    user: 'postgres',
-    host: 'db.vthfmjwbxstaeeqtrqqu.supabase.co',
-    password: 'SUBRUROCKS@a1',
-    port:5432,
-    database: 'postgres',
+    user: process.env.SUP_USER,
+    host: process.env.SUP_HOST,
+    password:process.env.SUP_PASSWORD,
+    port:process.env.SUP_PORT,
+    database: process.env.SUP_USER,
 });
 async function connectToDatabase() {
     try {
