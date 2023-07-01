@@ -10,11 +10,12 @@ const { Client } = require('pg');
 //     database: 'todoapp'
 // })
 // console.log(process.env.API_KEY)
+console.log(process.env.SUP_USER,process.env.SUP_HOST,process.env.SUP_PASSWORD,process.env.SUP_PORT,process.env.SUP_USER)
 const supabase = new Client({
     user: process.env.SUP_USER,
     host: process.env.SUP_HOST,
     password: process.env.SUP_PASSWORD,
-    port: process.env.SUP_PORT,
+    port:process.env.SUP_PORT,
     database: process.env.SUP_USER,
 });
 async function connectToDatabase() {
