@@ -4,7 +4,6 @@ const app = express();
 const cors = require('cors');
 const {v4: uuidv4} = require('uuid');
 const bcrypt = require('bcrypt');
-require('dotenv').config()
 const jwt = require('jsonwebtoken')
 app.use(cors({
     'allowedHeaders': ['Content-Type'],
@@ -101,5 +100,4 @@ app.post('/login',async (req,res)=>{
 })
 app.listen(PORT, ()=> {
     console.log(`port running on ${PORT}`);
-    console.log(process.env.SUP_USER,process.env.SUP_HOST,process.env.SUP_PASSWORD,process.env.SUP_PORT,process.env.SUP_USER);
 })
