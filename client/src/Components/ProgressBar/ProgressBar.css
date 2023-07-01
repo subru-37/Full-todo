@@ -1,0 +1,11 @@
+.outer{
+    width: 200px;
+    height: 14px;
+    background-color: rgb(216,216,216);
+    border-radius: 7px;
+    overflow: hidden;
+    width: 60%;
+}
+.inner{
+    height: 14px;
+}

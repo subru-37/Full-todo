@@ -4,5 +4,19 @@
     border-radius: 10px;
     box-shadow: rgba(0,0,0,0.2) 0 0 0 1px;
     display: flex;
+    flex-direction: row;
+    align-items: center;
     justify-content: space-between;
+}
+.content{
+    position: relative;
+    width: 75%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.list-button{
+    width: 20%;
+    display: flex;
+    justify-content: space-around;
 }

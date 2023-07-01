@@ -2,8 +2,10 @@ import React from 'react'
 import './Modal.css';
 import { useContext } from 'react';
 import { themeContext } from '../../Contexts/TaskContext';
-import axios from 'axios'
+import axios from 'axios';
+import { useCookies } from 'react-cookie';
 const Modal = (props) => {
+  const [cookies, setCookie, removeCookie] = useCookies(null)
   const {setData,mode,data,setShowModal,showModal,tasks,key,setKey,setTasks} = useContext(themeContext);
   if (mode=== 'edit'){
     const mydata = tasks.filter((obj)=>{
@@ -42,7 +44,7 @@ const Modal = (props) => {
         console.log('worked!!!');
         
         setShowModal(false);
-        setData({user_email: 'subramani.xiic@gmail.com',
+        setData({user_email: cookies.email,
         title: '', 
         progress: 50,
         date: new Date()});
@@ -54,7 +56,7 @@ const Modal = (props) => {
     }
   }
   const getData = async () =>{
-    const userEmail = 'subramani.xiic@gmail.com'
+    const userEmail = cookies.email
     try{
     const response = await axios.get(`${import.meta.env.VITE_APP_SERVERURL}/todos/${userEmail}`)
     // console.log(response.data)
@@ -77,7 +79,7 @@ const Modal = (props) => {
       if (response.status === 200){
         console.log('worked!!!');
         setShowModal(false);
-        setData({user_email: 'subramani.xiic@gmail.com',
+        setData({user_email: cookies.email,
         title: '', 
         progress: 50,
         date: new Date()});

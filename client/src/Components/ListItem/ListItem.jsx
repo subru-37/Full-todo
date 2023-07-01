@@ -4,11 +4,13 @@ import ProgressBar from '../ProgressBar/ProgressBar';
 import TickIcon from '../TickIcon/TickIcon';
 import { useContext } from 'react';
 import { themeContext } from '../../Contexts/TaskContext';
+import { useCookies } from 'react-cookie';
 import axios from 'axios';
 const ListItem = (props) => {
+  const [cookies, setCookie, removeCookie] = useCookies(null)
   const {setShowModal, setMode,setKey,key,setData,setTasks,tasks} = useContext(themeContext);
   const getData = async () =>{
-    const userEmail = 'subramani.xiic@gmail.com'
+    const userEmail = cookies.email
     try{
     const response = await axios.get(`${import.meta.env.VITE_APP_SERVERURL}/todos/${userEmail}`)
     // console.log(response.data)
@@ -26,7 +28,7 @@ const ListItem = (props) => {
       if (response.status === 200){
         console.log('worked!!!');
         setShowModal(false);
-        setData({user_email: 'subramani.xiic@gmail.com',
+        setData({user_email: cookies.email,
         title: '', 
         progress: 50,
         date: new Date()});
@@ -40,9 +42,11 @@ const ListItem = (props) => {
   return (
     <li className='list-item'>
       <div className='content'>
+      <div style={{display:'flex', alignItems:'center', flexDirection:'row'}}>
       <TickIcon/>
       <p>{props.task.title}</p>
-      <ProgressBar/>
+      </div>
+      <ProgressBar progress={props.task.progress}/>
       </div>
       <div className='list-button'>
         <button className='edit' onClick={()=>{setMode('edit');setShowModal(true);setKey(props.mykey)}}>EDIT</button>

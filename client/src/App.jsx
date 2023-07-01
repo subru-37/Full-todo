@@ -7,11 +7,14 @@ import ProgressBar from './Components/ProgressBar/ProgressBar'
 import axios from 'axios';
 import { useContext } from 'react';
 import { themeContext } from './Contexts/TaskContext'
-import { useEffect } from 'react'
+import { useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 function App() {
   const {tasks, setTasks} = useContext(themeContext);
+  const [cookies, setCookie, removeCookie] = useCookies(null)
+  const userEmail = cookies.email
   const getData = async () =>{
-      const userEmail = 'subramani.xiic@gmail.com';
+    const userEmail = cookies.email
       console.log(import.meta.env.VITE_APP_SERVERURL);
       try{
       const response = await axios.get(`${import.meta.env.VITE_APP_SERVERURL}/todos/${userEmail}`)
@@ -21,6 +24,7 @@ function App() {
       console.error(err)
     }
   }
+  const authToken = cookies.AuthToken
   // const getData = async () =>{
   //   const userEmail = 'subramani.xiic@gmail.com';
   //   // console.log(userEmail)
@@ -33,17 +37,26 @@ function App() {
   // }
 
   // getData()
-  useEffect(()=>getData,[])
-  console.log(tasks)
+  useEffect(()=>{
+    if(authToken){
+      getData()
+    }
+  },[])
   const sortedTasks = tasks?.sort((a,b)=> new Date(a.data) - new Date(b.date));
   return (
     <div className='app'>
-    <ListHeader listname={'holiday tick list'}/>
-    {
-      sortedTasks?.map((task,index)=>{
-        return(<ListItem key={tasks[index].id} task={task} mykey={tasks[index].id} mytitle={tasks[index].title}/>);
-      })
-    }
+      {
+        !authToken && <Auth/>
+      }
+      {
+        authToken && <div> <ListHeader listname={'Holiday tick list!!'}/>
+        <p>Welcome Back {userEmail}</p>
+        {
+          sortedTasks?.map((task,index)=>{
+            return(<ListItem key={tasks[index].id} task={task} mykey={tasks[index].id} mytitle={tasks[index].title}/>);
+          })
+        }</div>
+      }
     </div>
   )
 }
