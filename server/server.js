@@ -3,6 +3,8 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const {v4: uuidv4} = require('uuid');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
 app.use(cors({
     'allowedHeaders': ['Content-Type'],
     'origin': '*',
@@ -56,6 +58,41 @@ app.delete('/todos/:id', async (req,res)=>{
         res.json(deleteTodo);
     }
     catch(err){
+        console.log(err)
+    }
+})
+app.post('/signup',async (req,res)=>{
+    const {email,password} = req.body;
+    // console.log(email,password)
+    const salt = bcrypt.genSaltSync(10);
+    const hashpass = bcrypt.hashSync(password,salt);
+    try{
+        const signup = await pool.query(`INSERT INTO users (email,hashed_password) VALUES($1,$2)`,[email,hashpass]);
+        const token = jwt.sign({email},'secret',{expiresIn:'1hr'});
+        res.json({email,token})
+    }catch(err){
+        console.log(err)
+        if(err){
+            res.json({detail: err.detail})
+        }
+    }
+})
+app.post('/login',async (req,res)=>{
+    const {email,password} = req.body;
+
+    try{
+        const users = await pool.query('SELECT * FROM users WHERE EMAIL= $1',[email])
+        if(!users.rows.length){
+            return res.json({detail: 'User does not exist, please sign up'})
+        }
+        const success = await bcrypt.compare(password,users.rows[0].hashed_password);
+        const token = jwt.sign({email},'secret',{expiresIn:'1hr'});
+        if(success){
+            res.json({'email': users.rows[0].email,token: token})
+        }else{
+            res.json({detail: 'login failed'})
+        }
+    }catch(err){
         console.log(err)
     }
 })
