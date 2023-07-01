@@ -2,16 +2,21 @@ const Pool = require('pg').Pool;
 require('dotenv').config()
 // import {createClient} from '@supabase/supabase-js'
 const { Client } = require('pg');
-const pool = new Pool({
-    user: 'postgres',
-    password: process.env.PASSWORD,
-    host: process.env.HOST,
-    port: process.env.DBPORT,
-    database: 'todoapp'
-})
+// const pool = new Pool({
+//     user: 'postgres',
+//     password: process.env.PASSWORD,
+//     host: process.env.HOST,
+//     port: process.env.DBPORT,
+//     database: 'todoapp'
+// })
 // console.log(process.env.API_KEY)
-const conneString = process.env.DATABASE_URL;
-const supabase = new Client({ conneString,password:process.env.PASSWORD_DB  });
+const supabase = new Client({
+    user: process.env.SUP_USER,
+    host: process.env.SUP_HOST,
+    password: process.env.SUP_PASSWORD,
+    port: process.env.SUP_PORT,
+    database: process.env.SUP_USER,
+});
 async function connectToDatabase() {
     try {
       await supabase.connect();
@@ -22,5 +27,5 @@ async function connectToDatabase() {
   }
   
   connectToDatabase();
-module.exports = pool;
+// module.exports = pool;
 module.exports = supabase;

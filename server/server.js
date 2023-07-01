@@ -13,7 +13,7 @@ app.use(cors({
 app.get('/', (req,res)=>{
     res.send("Hello")
 })
-const pool = require('./db');
+// const pool = require('./db');
 const supabase = require('./db');
 app.use(express.json())
 //get 
