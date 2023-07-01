@@ -17,7 +17,6 @@ app.get('/', (req,res)=>{
 const supabase = require('./db');
 app.use(express.json())
 //get 
-// console.log('haha')
 app.get('/todos/:userEmail',async (req,res)=>{
     const {userEmail} = req.params;
     try{   
@@ -29,16 +28,20 @@ app.get('/todos/:userEmail',async (req,res)=>{
         console.log(err)
     }
 })
-app.post('/todos', async (req,res)=>{
-    const {user_email, title, progress, date} = req.body;
-    const id = uuidv4();
+async function random(user_email, title, progress, date,res,req){
+    const id = Math.floor(Math.random()*10000);
     try{
         const toDo = await supabase.query(`INSERT INTO todos(id,user_email, title, progress, date) VALUES($1,$2,$3,$4,$5);`,[id,user_email, title, progress, date] );
-        console.log(id,user_email, title, progress, date)
+        // console.log(id,user_email, title, progress, date)
         res.json(toDo)
     }catch(err){
         console.log(err)
+        random()
     }
+}
+app.post('/todos', async (req,res)=>{
+    const {user_email, title, progress, date} = req.body;    
+    random(user_email, title, progress, date,res,req);
 })
 app.put('/todos/:id', async (req,res)=>{
     const {id} = req.params;
@@ -53,7 +56,6 @@ app.put('/todos/:id', async (req,res)=>{
 })
 app.delete('/todos/:id', async (req,res)=>{
     const {id} = req.params;
-    console.log(id)
     try{
         const deleteTodo = await supabase.query(`DELETE FROM todos WHERE id = $1;`,[id]);
         res.json(deleteTodo);
@@ -64,11 +66,9 @@ app.delete('/todos/:id', async (req,res)=>{
 })
 app.post('/signup',async (req,res)=>{
     const {email,password} = req.body;
-    // console.log(email,password)
     const salt = bcrypt.genSaltSync(10);
     const hashpass = bcrypt.hashSync(password,salt);
     try{
-        console.log(`INSERT INTO users (email,hashed_password) VALUES($1,$2)`,[email,hashpass])
         const signup = await supabase.query(`INSERT INTO users (email,hashed_password) VALUES($1,$2)`,[email,hashpass]);
         const token = jwt.sign({email},'secret',{expiresIn:'1hr'});
         res.json({email,token})

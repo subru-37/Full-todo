@@ -14,7 +14,6 @@ const Modal = (props) => {
         return obj;
       }
     })
-    console.log(mydata[0].title)
   //   setData((preValue)=>{
   //     return{
   //     ...preValue,
@@ -23,10 +22,8 @@ const Modal = (props) => {
   //   };
   // })
   }
-  console.log(mode)
   function handleChange(event) {
     const { name, value } = event.target;
-    console.log(name,value);
     setData((preValue) => {
       return {
         ...preValue,
@@ -39,9 +36,7 @@ const Modal = (props) => {
     e.preventDefault();
     try{
       const response = await axios.put(`${import.meta.env.VITE_APP_SERVERURL}/todos/${key}`,data);
-      console.log(response);
       if (response.status === 200){
-        console.log('worked!!!');
         
         setShowModal(false);
         setData({user_email: cookies.email,
@@ -59,7 +54,6 @@ const Modal = (props) => {
     const userEmail = cookies.email
     try{
     const response = await axios.get(`${import.meta.env.VITE_APP_SERVERURL}/todos/${userEmail}`)
-    // console.log(response.data)
     setTasks(response.data)
   }catch(err){
     console.error(err)
@@ -67,7 +61,6 @@ const Modal = (props) => {
 }
   async function postData(event){
     event.preventDefault();
-    console.log('piost')
     try{
       const response = await axios.post(`${import.meta.env.VITE_APP_SERVERURL}/todos/`,data);
     // const response = fetch('${import.meta.env.VITE_APP_SERVERURL}/todos/',{
@@ -75,9 +68,7 @@ const Modal = (props) => {
     //     headers: {'Content-Type': 'application/json'},
     //     body: JSON.stringify(data)
     //   })
-      console.log(response)
       if (response.status === 200){
-        console.log('worked!!!');
         setShowModal(false);
         setData({user_email: cookies.email,
         title: '', 
@@ -99,7 +90,7 @@ const Modal = (props) => {
         </div>
         <form>
           <input
-          require="true"
+          required
           maxLength={30}
           placeholder='Your task'
           name='title'
@@ -109,6 +100,7 @@ const Modal = (props) => {
           <br/>
           <label htmlFor="range">Drag to select your current progress</label>
           <input type="range" min={0} max={100} value={data.progress} onChange={handleChange} name='progress'/>
+          <label htmlFor="range">{data.progress}%</label>
           <input className={mode} type="submit" onClick={mode==='create'? postData:editData}/>
         </form>
       </div>

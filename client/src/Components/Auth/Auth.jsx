@@ -4,7 +4,6 @@ import axios from 'axios';
 import {useCookies} from 'react-cookie'
 const Auth = () => {
   const [cookies, setCookie, removeCookie] = useCookies(null)
-  console.log(cookies)
   const [isLogIn, setislogIn] = useState(false); 
   const [form,setForm] = useState({
     email: '',
@@ -14,7 +13,6 @@ const Auth = () => {
   function handlechange(event){
     const {name, value} = event.target;
     setForm((preValue)=>{
-      console.log(name,value)
       return{
         ...preValue, 
         [name]: value
@@ -23,13 +21,11 @@ const Auth = () => {
   }
   async function handleSubmit(e,endpoint){
     e.preventDefault();
-    console.log(endpoint)
     if (!isLogIn && form.password !== cpass){
       setError('Make sure your passwords match')
       return
     }
     const response = await axios.post(`${import.meta.env.VITE_APP_SERVERURL}/${endpoint}`,form);
-    console.log(response.data)
     if(response.data.detail){
       setError(response.data.detail)
     }else{

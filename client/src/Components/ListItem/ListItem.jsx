@@ -13,7 +13,6 @@ const ListItem = (props) => {
     const userEmail = cookies.email
     try{
     const response = await axios.get(`${import.meta.env.VITE_APP_SERVERURL}/todos/${userEmail}`)
-    // console.log(response.data)
     setTasks(response.data)
   }catch(err){
     console.error(err)
@@ -21,12 +20,9 @@ const ListItem = (props) => {
 }
   async function deleteItem(){
     setKey(props.mykey);
-    // console.log(props.mykey);
     try{
       const response = await axios.delete(`${import.meta.env.VITE_APP_SERVERURL}/todos/${props.mykey}`);
-      console.log(response);
       if (response.status === 200){
-        console.log('worked!!!');
         setShowModal(false);
         setData({user_email: cookies.email,
         title: '', 
@@ -44,9 +40,10 @@ const ListItem = (props) => {
       <div className='content'>
       <div style={{display:'flex', alignItems:'center', flexDirection:'row'}}>
       <TickIcon/>
-      <p>{props.task.title}</p>
+      <p style={{minWidth:'100px'}}>{props.task.title}</p>
       </div>
       <ProgressBar progress={props.task.progress}/>
+      <p style={{minWidth:'40px'}}>{props.task.progress}%</p>
       </div>
       <div className='list-button'>
         <button className='edit' onClick={()=>{setMode('edit');setShowModal(true);setKey(props.mykey)}}>EDIT</button>

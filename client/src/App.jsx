@@ -15,10 +15,8 @@ function App() {
   const userEmail = cookies.email
   const getData = async () =>{
     const userEmail = cookies.email
-      console.log(import.meta.env.VITE_APP_SERVERURL);
       try{
       const response = await axios.get(`${import.meta.env.VITE_APP_SERVERURL}/todos/${userEmail}`)
-      // console.log(response.data)
       setTasks(response.data)
     }catch(err){
       console.error(err)
@@ -27,11 +25,9 @@ function App() {
   const authToken = cookies.AuthToken
   // const getData = async () =>{
   //   const userEmail = 'subramani.xiic@gmail.com';
-  //   // console.log(userEmail)
   //   try{
   //   const response = await fetch(`${process.env.VITE_APP_SERVERURL}/todos/${userEmail}`);
   //   const json = await response.json();
-  //   console.log(json)
   // }catch(err){
   //   console.error(err)
   // }
