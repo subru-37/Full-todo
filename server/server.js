@@ -11,7 +11,6 @@ app.use(cors({
     'origin': '*',
     'preflightContinue': true
   }))
-console.log(process.env.SUP_USER,process.env.SUP_HOST,process.env.SUP_PASSWORD,process.env.SUP_PORT,process.env.SUP_USER)
 app.get('/', (req,res)=>{
     res.send("Hello")
 })
@@ -100,4 +99,7 @@ app.post('/login',async (req,res)=>{
         console.log(err)
     }
 })
-app.listen(PORT, ()=> console.log(`port running on ${PORT}`))
+app.listen(PORT, ()=> {
+    console.log(`port running on ${PORT}`);
+    console.log(process.env.SUP_USER,process.env.SUP_HOST,process.env.SUP_PASSWORD,process.env.SUP_PORT,process.env.SUP_USER);
+})
