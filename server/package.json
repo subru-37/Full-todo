@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.js",
-    "deploy": "node server.js",
+    "deploy": "nodemon server.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
