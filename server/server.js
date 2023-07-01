@@ -14,6 +14,7 @@ app.get('/', (req,res)=>{
     res.send("Hello")
 })
 const pool = require('./db');
+const supabase = require('./db');
 app.use(express.json())
 //get 
 // console.log('haha')
@@ -67,6 +68,7 @@ app.post('/signup',async (req,res)=>{
     const salt = bcrypt.genSaltSync(10);
     const hashpass = bcrypt.hashSync(password,salt);
     try{
+        console.log(`INSERT INTO users (email,hashed_password) VALUES($1,$2)`,[email,hashpass])
         const signup = await pool.query(`INSERT INTO users (email,hashed_password) VALUES($1,$2)`,[email,hashpass]);
         const token = jwt.sign({email},'secret',{expiresIn:'1hr'});
         res.json({email,token})

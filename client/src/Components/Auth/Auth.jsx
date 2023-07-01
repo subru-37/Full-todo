@@ -33,8 +33,10 @@ const Auth = () => {
     if(response.data.detail){
       setError(response.data.detail)
     }else{
-      setCookie('email', response.data.email)
-      setCookie('AuthToken', response.data.token)
+      if (response.data.email!== undefined || response.data.detail !== undefined){
+        setCookie('email', response.data.email)
+        setCookie('AuthToken', response.data.token)
+      }
       window.location.reload()
     }
   }
