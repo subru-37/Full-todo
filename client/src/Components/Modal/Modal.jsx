@@ -34,8 +34,15 @@ const Modal = (props) => {
   }
   async function editData(e){
     e.preventDefault();
+    const userAuth = cookies.AuthToken;
+    // console.log(data,userAuth);
     try{
-      const response = await axios.put(`${import.meta.env.VITE_APP_SERVERURL}/todos/${key}`,data);
+      const response = await axios.put(`${import.meta.env.VITE_APP_SERVERURL}/todos/${key}`,{
+        auth: userAuth,
+        title: data.title,
+        progress: data.progress,
+        date: data.date
+      });
       if (response.status === 200){
         
         setShowModal(false);
@@ -51,18 +58,24 @@ const Modal = (props) => {
     }
   }
   const getData = async () =>{
-    const userEmail = cookies.email
-    try{
-    const response = await axios.get(`${import.meta.env.VITE_APP_SERVERURL}/todos/${userEmail}`)
-    setTasks(response.data)
-  }catch(err){
-    console.error(err)
+    const userAuth = cookies.AuthToken;
+      try{
+      const response = await axios.get(`${import.meta.env.VITE_APP_SERVERURL}/todos/${userAuth}`)
+      setTasks(response.data)
+    }catch(err){
+      console.error(err)
+    }
   }
-}
   async function postData(event){
     event.preventDefault();
+    const userAuth = cookies.AuthToken;
     try{
-      const response = await axios.post(`${import.meta.env.VITE_APP_SERVERURL}/todos/`,data);
+      const response = await axios.post(`${import.meta.env.VITE_APP_SERVERURL}/todos/`,{
+        auth: userAuth,
+        title: data.title,
+        progress: data.progress,
+        date: data.date
+      });
     // const response = fetch('${import.meta.env.VITE_APP_SERVERURL}/todos/',{
     //     method:'POST',
     //     headers: {'Content-Type': 'application/json'},

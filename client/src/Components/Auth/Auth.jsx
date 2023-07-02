@@ -26,12 +26,12 @@ const Auth = () => {
       return
     }
     const response = await axios.post(`${import.meta.env.VITE_APP_SERVERURL}/${endpoint}`,form);
+    // console.log(response.data)
     if(response.data.detail){
       setError(response.data.detail)
     }else{
-      if (response.data.email!== undefined || response.data.detail !== undefined){
-        setCookie('email', response.data.email)
-        setCookie('AuthToken', response.data.token)
+      if (response.data !== undefined){
+        setCookie('AuthToken', response.data)
       }
       window.location.reload()
     }

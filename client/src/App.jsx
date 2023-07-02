@@ -14,9 +14,9 @@ function App() {
   const [cookies, setCookie, removeCookie] = useCookies(null)
   const userEmail = cookies.email
   const getData = async () =>{
-    const userEmail = cookies.email
+    const userAuth = cookies.AuthToken;
       try{
-      const response = await axios.get(`${import.meta.env.VITE_APP_SERVERURL}/todos/${userEmail}`)
+      const response = await axios.get(`${import.meta.env.VITE_APP_SERVERURL}/todos/${userAuth}`)
       setTasks(response.data)
     }catch(err){
       console.error(err)
@@ -45,7 +45,7 @@ function App() {
         !authToken && <Auth/>
       }
       {
-        authToken && <div> <ListHeader listname={'Holiday tick list!!'}/>
+        authToken && <div> <ListHeader listname={'Your Task completion app!'}/>
         <p>Welcome Back {userEmail}</p>
         {
           sortedTasks?.map((task,index)=>{
