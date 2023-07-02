@@ -21,7 +21,7 @@ app.get('/todos/:userAuth',async (req,res)=>{
     const {userAuth} = req.params;
     const decoded = jwt.decode(userAuth);
     try{   
-        const todos = await supabase.query('SELECT * FROM todos WHERE user_email = $1;',[decoded.email]);
+        const todos = await supabase.query('SELECT id,title,progress,date FROM todos WHERE user_email = $1;',[decoded.email]);
         res.json(todos.rows)
     }   
 

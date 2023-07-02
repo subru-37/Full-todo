@@ -10,21 +10,22 @@ const ListItem = (props) => {
   const [cookies, setCookie, removeCookie] = useCookies(null)
   const {setShowModal, setMode,setKey,key,setData,setTasks,tasks} = useContext(themeContext);
   const getData = async () =>{
-    const userEmail = cookies.email
-    try{
-    const response = await axios.get(`${import.meta.env.VITE_APP_SERVERURL}/todos/${userEmail}`)
-    setTasks(response.data)
-  }catch(err){
-    console.error(err)
+    const userAuth = cookies.AuthToken;
+      try{
+      const response = await axios.get(`${import.meta.env.VITE_APP_SERVERURL}/todos/${userAuth}`)
+      console.log(response.data)
+      setTasks(response.data)
+    }catch(err){
+      console.error(err)
+    }
   }
-}
   async function deleteItem(){
     setKey(props.mykey);
     try{
       const response = await axios.delete(`${import.meta.env.VITE_APP_SERVERURL}/todos/${props.mykey}`);
       if (response.status === 200){
         setShowModal(false);
-        setData({user_email: cookies.email,
+        setData({user_email: '',
         title: '', 
         progress: 50,
         date: new Date()});
